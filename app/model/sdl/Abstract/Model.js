@@ -1,4 +1,5 @@
-/* * Copyright (c) 2013, Ford Motor Company All rights reserved.
+/*
+ * Copyright (c) 2013, Ford Motor Company All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met: ·
@@ -68,7 +69,7 @@ SDL.SDLModel = Em.Object.extend({
 
   applicationStatusBar: '',
 
-   updateStatusBar: function() {
+  updateStatusBar: function() {
 
     if (this.data.limitedExist &&
       SDL.SDLController.getApplicationModel(this.data.stateLimited)) {
@@ -638,17 +639,16 @@ SDL.SDLModel = Em.Object.extend({
     var message = {};
 
     var applicationType = null,//Default value - NonMediaModel see SDL.SDLController.applicationModels
-      app = SDL.SDLController.getApplicationModel(params.appID);
+    app = SDL.SDLController.getApplicationModel(params.appID);
 
-      if (app != null && params.icon != null) {
+    if (app != null && params.icon != null) {
       console.log('Resuming application icon for ' + params.appID);
       this.setAppIconByAppId(params.appID, params.icon);
-      }
+    }
 
     if (app != undefined && app.initialized == false) {
-
       if (app.isMedia != params.isMediaApplication) { // If current not initialized model does not matches the registered application type
-        this.convertModel(params);                   // then model should be changed
+        this.convertModel(params);                    // then model should be changed
       } else {
         app.disabledToActivate = params.greyOut;
       }
@@ -680,7 +680,7 @@ SDL.SDLModel = Em.Object.extend({
       this.data.unRegisteredApps.pop(params.appID);
     }
 
-    
+
     //Magic number if predefined VR command USER_EXIT
     message = {
         'cmdID': -2,
@@ -702,19 +702,30 @@ SDL.SDLModel = Em.Object.extend({
     }
   },
 
-  setAppIconByAppId: function(appId, path) {
+  /**
+   * Method to set specified application icon to the new one
+   *
+   * @param {Number}
+   *            appID
+   * @param {String}
+   *            path
+   */
+  setAppIconByAppId: function(appID, path) {
     var img = new Image();
     img.onload = function() {
-        console.log('Icon for ' + appId + ' was set to ' + path);
-        SDL.SDLController.getApplicationModel(appID).set('appIcon', path);
+       var model = SDL.SDLController.getApplicationModel(appID);
+       if (model != null) {
+         console.log('Icon for ' + appID + ' was set to ' + path);
+         model.set('appIcon', img.src + '?' + new Date().getTime());
+        }
     };
     img.onerror = function(event) {
-        console.log('Error: Icon for ' + appId + ' was not set properly');    
+        console.log('Error: Icon for ' + appID + ' was not set properly');
         return false;
     };
 
     img.src = path;
-   },
+  },
 
   /**
    * Method to convert existed model to registered type
@@ -900,7 +911,7 @@ SDL.SDLModel = Em.Object.extend({
 
       var img = new Image();
       img.onload = function() {
-        
+
         // code to set the src on success
         SDL.SDLController.getApplicationModel(message.appID).
             set('appIcon', img.src + '?' + new Date().getTime());
@@ -918,8 +929,6 @@ SDL.SDLModel = Em.Object.extend({
       img.src = message.syncFileName.value;
     }
   },
-
-
 
   /**
    * SDL UI Alert response handler show popup window
