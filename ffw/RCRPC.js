@@ -222,6 +222,10 @@ FFW.RC = FFW.RPCObserver.create(
                 SDL.RadioModel.setRadioData(
                   request.params.moduleData.radioControlData);
               if (SDL.RadioModel.radioControlStruct.radioEnable) {
+                if (Object.keys(newRadioControlData).length > 0) {
+                  FFW.RC.onInteriorVehicleDataNotification({moduleType:'RADIO', 
+                                                            radioControlData: newRadioControlData});
+                }
                 SDL.RadioModel.saveCurrentOptions();
               }
             }
