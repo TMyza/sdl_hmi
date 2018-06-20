@@ -38,11 +38,11 @@ DeployServer() {
 }
 
 StartServer() {
-	echo "Starting HMI MQ signals listener..."
+	echo "Starting HMI signals listener..."
     cp $SOURCE_DIR/$TARGET_SCRIPT $TARGET_DIR
-    python $TARGET_DIR/$TARGET_SCRIPT
+    python3 $TARGET_DIR/$TARGET_SCRIPT
     rm $TARGET_DIR/$TARGET_SCRIPT
-    echo "HMI MQ signals listener was stopped"
+    echo "HMI signals listener was stopped"
 }
 
 if find $TARGET_DIR -mindepth 1 | read; then

@@ -30,7 +30,7 @@ FFW.RPCSimpleClient = Em.Object.create({
     init:function(){
     },
     connect:function(){
-      this.socket = new WebSocket(FLAGS.MQ_SERVER_URL);
+      this.socket = new WebSocket(FLAGS.PYTHON_SERVER_URL);
       var self = this;
       this.socket.onopen = function(evt) {
         self.onWSOpen(evt);

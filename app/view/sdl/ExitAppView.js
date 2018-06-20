@@ -47,10 +47,10 @@ SDL.ExitApp = Em.ContainerView.create(
       'onAwakeSDLButton',
       'onDeactivateSelect',
       'onDeactivateLabel',
-      'mqSignalLabel',
-      'mqSignalSelect',
+      'signalLabel',
+      'signalSelect',
       'sendAppStateButton',
-      'sendMQSignalButton'
+      'sendSignalButton'
     ],
     /**
      * Title of VehicleInfo PopUp view
@@ -77,23 +77,23 @@ SDL.ExitApp = Em.ContainerView.create(
       }
     ),
     /**
-     * Title of MQ signal PopUp view
+     * Title of signal PopUp view
      */
-    mqSignalLabel: SDL.Label.extend(
+    signalLabel: SDL.Label.extend(
       {
-        elementId: 'mqSignalLabel',
-        classNames: 'mqSignalLabel',
-        content: 'MQ Signal'
+        elementId: 'signalLabel',
+        classNames: 'signalLabel',
+        content: 'Signal'
       }
     ),
     /**
-     * HMI element Select with parameters of MQ signal states
+     * HMI element Select with parameters of signal states
      */
-    mqSignalSelect: Em.Select.extend(
+    signalSelect: Em.Select.extend(
       {
-        elementId: 'mqSignalSelect',
-        classNames: 'mqSignalSelect',
-        contentBinding: 'SDL.SDLModel.data.mqSignals',
+        elementId: 'signalSelect',
+        classNames: 'signalSelect',
+        contentBinding: 'SDL.SDLModel.data.Signals',
         optionValuePath: 'content.id',
         optionLabelPath: 'content.name'
       }
@@ -144,15 +144,15 @@ SDL.ExitApp = Em.ContainerView.create(
     }
   ),
     /**
-     * HMI element Button for send MQ signal
+     * HMI element Button for send signal
      */
- sendMQSignalButton:SDL.Button.extend(
+ sendSignalButton:SDL.Button.extend(
   {
-    elementId:'sendMQSignalButton',
-    classNames: 'button sendMQSignalButton',
-    text: 'Send MQ signal',
+    elementId:'sendSignalButton',
+    classNames: 'button sendSignalButton',
+    text: 'Send signal',
     action:function(){
-      FFW.RPCSimpleClient.send(SDL.ExitApp.mqSignalSelect.selection);
+      FFW.RPCSimpleClient.send(SDL.ExitApp.signalSelect.selection);
     },
     target: 'SDL.SDLController',
     buttonAction: true,

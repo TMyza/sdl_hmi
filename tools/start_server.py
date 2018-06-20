@@ -30,6 +30,7 @@ from websocket_server import WebsocketServer
 from threading import Thread
 from time import sleep
 import os
+import signal
 
 # Called for every client connecting (after handshake)
 def new_client(client, server):
@@ -42,9 +43,17 @@ def client_left(client, server):
 
 # Called when a client sends a message
 def message_received(client, server, message):
-	mq_name = "/SDLMQ"
 	print("Client(%d) said: %s\r" % (client['id'], message))
-	os.system("./tools/mqclient"+" " + mq_name + " " + message)
+	
+	# The value is taken from the file src/appMain/smartDeviceLink.ini
+	# Offset from SIGRTMIN
+	offset = {'LOW_VOLTAGE': 1, 'WAKE_UP': 2, 'IGNITION_OFF': 3}
+
+	signal_value = signal.Signals['SIGRTMIN'].value
+	signal_value += offset[message]
+
+	cmd_command = 'ps -ef | grep smartDeviceLinkCore | grep -v grep | awk \'{print $2}\' | xargs kill -' + str(signal_value)
+	os.system(cmd_command)
 
 def getch():
         import sys, tty, termios
@@ -59,7 +68,7 @@ def getch():
         return ch
 
 def startServer(server):
-	print("HMI MQ signals listener was started\r")
+	print("HMI signals listener was started\r")
 	server.set_fn_new_client(new_client)
 	server.set_fn_client_left(client_left)
 	server.set_fn_message_received(message_received)

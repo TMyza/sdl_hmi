@@ -298,9 +298,9 @@ SDL.SDLModelData = Em.Object.create(
       }
     ],
     /**
-     * List of MQ signals
+     * List of signals
      */
-    mqSignals: [
+    Signals: [
       {
         name: 'WAKE_UP',
         id: 0

@@ -617,7 +617,7 @@
     background: #535353;
 }
 
-#exitAppView .mqSignalLabel{
+#exitAppView .signalLabel{
     top: 70px;
     width: 290px;
     left: 355px;
@@ -682,7 +682,7 @@
     background: #393939;
 }
 
-#exitAppView .mqSignalSelect{
+#exitAppView .signalSelect{
     top: 125px;
     position: absolute;
     width: 150px;
@@ -793,7 +793,7 @@
     border: 1px solid white;
 }
 
-#exitAppView .sendMQSignalButton {
+#exitAppView .sendSignalButton {
     right: 268px;
     top: 125px;
     width: 127px;
